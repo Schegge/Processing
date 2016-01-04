@@ -1,0 +1,16 @@
+{
+  "ver": 1,
+  "lvl": 1,
+  "death": false,
+  "night": true,
+  "happy": 100,
+  "birth": 2457385,
+  "health": 100,
+  "clean": 99,
+  "sleep": 100,
+  "hungry": 100,
+  "lastAccessMinutes": 1061,
+  "poop": false,
+  "name": "Luna",
+  "lastAccessDay": 2457385
+}
