@@ -1,18 +1,18 @@
 # Processing
-My Processing Sketches
+###My Processing Sketches
 
+| WORK IN PROGRESS      | *to do*               |
+| :-------------------: | :-------------------- |
+| Feed the Snake        | *make it into a game* |
+| Game Luna             | *make it into a game* |
+| Prato Fiorito (Mines) | *change grid's size*  |
+| Tamagotchi            | *some animations*     |
 
-> WORK IN PROGRESS
- - Feed the Snake         [make it into a game]
- - Game Luna              [dunno]
- - Prato Fiorito (Mines)  [to change grid's size and numeber of bombs]
- - Tamagotchi             [some animations]
-
-
-> COMPLETE
- - APH Germany
- - Natale (Christmas)
- - Rosetta Adventure
- - Snow Over Mountains
- - Space
- - The X-Files Believe
+| COMPLETE            |
+| :-----------------: |
+| Natale (Christmas)  |
+| Rosetta Adventure   |
+| Space               |
+| Snow Over Mountains |
+| The X-Files Believe |
+| APH Germany         |
