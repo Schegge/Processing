@@ -1,18 +1,14 @@
-class NewGame {
+class NewGame {    
+  float x, y;    
+  float w, h;
   
-  float x = width/2;
-  float y = height-grid.margin/2;
-  
-  float w = grid.margin*1.5;
-  float h = grid.margin*0.4;
-  
-  /*
-   * @TODO: change grid's size and n' of bombs
-   */
-  // int _n = 9;
-  // int _b = 10;
-  
-  NewGame() {}
+  NewGame() {
+    x = grid.ww/2;
+    y = grid.hh-grid.margin/2;
+    
+    w = grid.margin*1.5;
+    h = grid.margin*0.4;
+  }
   
   void display() {
     pushStyle();
@@ -23,15 +19,24 @@ class NewGame {
       fill(TEXTS);
       text("New Game", x, y);
     popStyle();
-    
-    clicked();
   }
   
   void clicked() {
     if (mousePressed && isUnderMouse()) {
-      grid = new Grid(N_DEFAULT, B_DEFAULT);
-      int s = grid.n*grid.size + grid.margin*2;
-      surface.setSize(s, s+grid.margin/2);
+      if (scene == 0) {
+        N_DEFAULT = Integer.parseInt(chooseG.nn);
+        B_DEFAULT = Integer.parseInt(chooseG.bb);
+        if (N_DEFAULT > 25) N_DEFAULT = 25;
+        if (B_DEFAULT > N_DEFAULT*N_DEFAULT/3) B_DEFAULT = N_DEFAULT*N_DEFAULT/3;
+        grid.init(N_DEFAULT, B_DEFAULT);
+        surface.setSize(grid.ww, grid.hh);
+        scene = 1;
+        x = grid.ww/2;
+        y = grid.hh-grid.margin/2;
+      } else {
+        chooseG = new ChooseGrid();
+        scene = 0;
+      }
     }
   }
  
@@ -41,6 +46,5 @@ class NewGame {
       return true;
     }
     return false;      
-  }
-  
+  }    
 }

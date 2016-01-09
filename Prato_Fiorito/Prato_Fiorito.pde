@@ -1,87 +1,86 @@
-import java.util.Collections;
 import java.util.LinkedList;
+import java.util.Collections;
 
 /**
- * ? PRATO FIORITO == MINES
+ * ? PRATO FIORITO == MINESWEEPER
  */
- 
-/*
- * @TODO: option to change grid size and num of bombs
- */
-
 
 int N_DEFAULT = 12;
 int B_DEFAULT = 15;
-
  
-color BACK = color(223,234,228);
-color GRID = color(205,150,145);
-color BOMB = color(186,74,110);
-color FLAG = color(12,171,171);
-color TEXTS = color(112,59,105);
+color BACK  = color(223, 234, 228);
+color GRID  = color(205, 150, 145);
+color BOMB  = color(186,  74, 110);
+color FLAG  = color( 12, 171, 171);
+color TEXTS = color(112,  59, 105);
 
 // cell.type
 char H = 'h';
 char O = 'o';
 char F = 'f';
 
+int scene = 0;
+int txtSize;
+
 Grid grid = new Grid(N_DEFAULT, B_DEFAULT);
+ChooseGrid chooseG;
 NewGame newGame;
 
-
 void settings() {
-  int s = grid.n*grid.size + grid.margin*2;
-  size(s, s+grid.margin/2);
+ size(grid.ww, grid.hh);
 }
 
 void setup() {
   surface.setResizable(true);
-  
-  textSize(floor(grid.size*0.6));
+//  size(360, 390);
+
+  frameRate(60);
+
+  txtSize = floor(grid.size*0.6);
+  textFont(createFont("Arial", txtSize));
   textAlign(CENTER, CENTER);
   stroke(BOMB);
   
+  chooseG = new ChooseGrid();
   newGame = new NewGame();
 }
 
-
-void draw() {  
+void draw() {
   background(BACK);
-  
-  grid.display();
-  
+  switch(scene) {
+    case 0:
+      chooseG.display();
+      break;
+    
+    case 1:
+      grid.display();
+      break;
+  }
+    
   newGame.display();
 }
 
 void mousePressed() {
-  if (!grid.win && !grid.lose) {
+  switch(scene) {
+    case 0:
+      chooseG.mousePress();
+      break;
     
-    for (int i = 0; i < grid.n_total; i++) {
-      if (grid.cells.get(i).isUnderMouse()) {
-        
-        if (grid.cells.get(i).type == H) {
-          
-          if (mouseButton == LEFT) {
-            grid.cells.get(i).type = O;
-            if (grid.cells.get(i).value == 0) {
-              // check all adjacent empty cells
-              grid.checkEmpties(i);
-              
-            }
-            if (grid.cells.get(i).bomb) {
-              grid.lose = true;
-            }            
-          } else if (mouseButton == RIGHT) {
-            grid.cells.get(i).type = F;
-          }
-          
-        } else if (grid.cells.get(i).type == F && mouseButton == LEFT) {
-          grid.cells.get(i).type = H;
-        }
-        break;
-        
-      }
-    }
+    case 1:
+      grid.mousePress();
+      break;
+  }
     
-  }  
+  newGame.clicked();
 }
+
+void keyTyped() {
+  if (scene == 0) chooseG.whenKeyTyp();
+}
+
+/*
+ *
+ *
+ */
+ 
+ 
