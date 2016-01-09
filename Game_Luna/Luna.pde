@@ -1,13 +1,4 @@
-class Luna {
-  float _posYu = height*0.3;
-  float _posYd = height*0.6;
-  
-  PVector pos = new PVector(width/2+52.5, _posYd);
-  PVector vel = new PVector(0, 0);
-  float angle = 0;
-  
-  // w = 185; h = 135
-  
+class Luna {  
   // 1' riga : posizione
   // 2' riga : vertex()
   // +' righe: bezierVertex()
@@ -98,7 +89,28 @@ class Luna {
       15, - 50, - 30,    0,   10,    0
   };
   
-  /////////
+  // Luna info  
+  float w = 185;
+  float h = 131;
+  
+  int xFix = 56;
+  int yFix = 51;
+  
+  float posX =  width*0.4 + xFix;
+  float posY = height*0.7 - yFix; 
+  
+  PVector pos = new PVector(posX, posY);
+  PVector posCentre = new PVector(0, 0);
+  PVector vel = new PVector(0, 0);
+  PVector acc = new PVector(0, 0);
+  PVector gravity = new PVector(0, 0.1);
+  PVector jumping = new PVector(0, -10);
+  boolean jump = false;
+  int nJump = 0;
+
+  // angle of the head
+  float angle = 0;
+  
   Luna() {}
   
   void display() {
@@ -107,27 +119,51 @@ class Luna {
     pushMatrix();
       translate(pos.x, pos.y);
       
-      strokeWeight(5);
-      stroke(BLACK, 7);
-      drawing();
+      pushStyle();
+        strokeWeight(5);
+        stroke(BLACK, 7);
+        drawing();
+      popStyle();
     popMatrix();
     
     if (frameCount % 40 == 0) {
       CODA[8] += CODA[8] == 5 ? 5 : -5;
       angle = angle == 0 ? radians(5) : 0;
-    }   
+    }
+  
+    pushStyle();
+    strokeWeight(1);
+    stroke(0);
+    line(posCentre.x, 0, posCentre.x, height);
+    line(posCentre.x+w/2, 0, posCentre.x+w/2, height);
+    line(posCentre.x-w/2, 0, posCentre.x-w/2, height);
+    line(0, posCentre.y, width, posCentre.y);
+    line(0, posCentre.y+h/2, width, posCentre.y+h/2);
+    line(0, posCentre.y-h/2, width, posCentre.y-h/2);
+    ellipse(pos.x, pos.y, 5, 5);
+    popStyle();
   }
   
   void move() {
-    if (mousePressed) {
-      vel.add(new PVector(0, -3));
-    } else {
-      vel.add(new PVector(0, 3));
+    acc.add(gravity);
+    if (jump) {
+      acc.add(jumping);
+      jump = false;
+      nJump++;
     }
-    pos.add(vel);
+    vel.add(acc);
     
-    vel.limit(1);    
-    pos.y = constrain(pos.y, _posYu, _posYd);
+    acc.mult(0);
+    vel.limit(5); 
+    
+    pos.add(vel);
+    if (pos.y >= posY) {
+      nJump = 0;
+    }
+    pos.y = constrain(pos.y, 0, posY);
+    
+    posCentre.x = pos.x - xFix;
+    posCentre.y = pos.y + yFix;
   }
   
   void drawing() {  

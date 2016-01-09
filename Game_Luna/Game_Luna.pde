@@ -2,6 +2,7 @@
  *  LUNA
  */
 
+Game game;
 Luna luna;
 
 color BACKG = color(206,151,112);
@@ -15,7 +16,8 @@ void setup() {
   noStroke();
   textSize(height/9);
   textAlign(CENTER, CENTER);
-  
+
+  game = new Game();
   luna = new Luna();
 }
 
@@ -31,12 +33,9 @@ void draw() {
   
   luna.display();
   
-  /*
-  pushStyle();
-  rectMode(CENTER);
-  fill(0, 100);
-  rect(width/2, height*0.6+50, 185, 135);  
-  ellipse(luna.pos.x, luna.pos.y, 10, 10);
-  popStyle();
-  */
+}
+
+
+void mousePressed() {
+  if (luna.nJump < 2) luna.jump = true;  
 }
