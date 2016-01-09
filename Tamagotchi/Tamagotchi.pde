@@ -121,46 +121,48 @@ void draw() {
 
 
 void mousePressed() {  
-  if (tama.isUnderMouse()) {
-    if (game.night) {
-      game.night = false;
-      game.scene = -1;
+  if (!game.death) {
+    if (tama.isUnderMouse()) {
+      if (game.night) {
+        game.night = false;
+        game.scene = -1;
+      }
+      if (game.happy < 100) game.happy++;
     }
-    if (game.happy < 100) game.happy++;
-  }
+    
+    // NOT SURE ?
+    for (int i = 0; i < 6; i++) {
+      if (button[i].isUnderMouse()) {
+        
+        // change scene
+        if (i == 5 && game.night) { // menu
+          game.scene = game.scene == i ? 4 : i;
+          break;        
+        }
+        
+        if (i != 4 && game.night) game.night = false;      
+        if (game.playing) game.playing = false;  
   
-  // NOT SURE ?
-  for (int i = 0; i < 6; i++) {
-    if (button[i].isUnderMouse()) {
-      
-      // change scene
-      if (i == 5 && game.night) { // menu
-        game.scene = game.scene == i ? 4 : i;
-        break;        
+        if (i == 4) {
+          game.night = !game.night;
+          game.scene = game.night ? i : -1;
+        } else {
+          game.scene = game.scene == i ? -1 : i;
+        }
+        
+        // specific actions
+        if (i == 1) {
+          wash = new Wash();
+        } else if (i == 2) {
+          medicine = new Medicine();
+        } else if (i == 3) {        
+          fun = new Fun();
+          game.playing = true;
+        }
+        
+        break;
+        
       }
-      
-      if (i != 4 && game.night) game.night = false;      
-      if (game.playing) game.playing = false;  
-
-      if (i == 4) {
-        game.night = !game.night;
-        game.scene = game.night ? i : -1;
-      } else {
-        game.scene = game.scene == i ? -1 : i;
-      }
-      
-      // specific actions
-      if (i == 1) {
-        wash = new Wash();
-      } else if (i == 2) {
-        medicine = new Medicine();
-      } else if (i == 3) {        
-        fun = new Fun();
-        game.playing = true;
-      }
-      
-      break;
-      
     }
   }
   

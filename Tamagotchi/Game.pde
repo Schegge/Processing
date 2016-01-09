@@ -79,7 +79,7 @@ class Game {
     // end of game 'cause of death
     death = !death && diffAccess > 1440*5 ? true : json.getBoolean("death");
     if (death) {
-      scene = -1;
+      scene = -2;
       night = false;
       poop = false;
     }
