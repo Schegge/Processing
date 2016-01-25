@@ -132,15 +132,27 @@ class Luna {
     }
   
     pushStyle();
-    strokeWeight(1);
     stroke(0);
-    line(posCentre.x, 0, posCentre.x, height);
-    line(posCentre.x+w/2, 0, posCentre.x+w/2, height);
-    line(posCentre.x-w/2, 0, posCentre.x-w/2, height);
+    strokeWeight(2);
+    line(posCentre.x, 0, posCentre.x, height);    
     line(0, posCentre.y, width, posCentre.y);
-    line(0, posCentre.y+h/2, width, posCentre.y+h/2);
-    line(0, posCentre.y-h/2, width, posCentre.y-h/2);
+        
+    strokeWeight(0);
+    fill(0, 50);
+    
     ellipse(pos.x, pos.y, 5, 5);
+    
+    rectMode(CORNERS);
+    rect(posCentre.x-w/2, posCentre.y-h/2, posCentre.x-w/3.5, posCentre.y-h/5);
+    rect(posCentre.x+w/5.5, posCentre.y-h/2, posCentre.x+w/2.7, posCentre.y-h/5);
+    rect(posCentre.x+w/2.7, posCentre.y-h/3, posCentre.x+w/2, posCentre.y-h/5);
+    
+    rect(posCentre.x-w/2, posCentre.y-h/5, posCentre.x+w/3, posCentre.y+h/15);
+    rect(posCentre.x+w/3, posCentre.y-h/5, posCentre.x+w/2, posCentre.y-h/9);
+    rect(posCentre.x-w/2.2, posCentre.y+h/15, posCentre.x+w/4, posCentre.y+h/4.5);
+    
+    rect(posCentre.x-w/4.5, posCentre.y+h/4.5, posCentre.x-w/2.7, posCentre.y+h/2);
+    rect(posCentre.x+w/6.8, posCentre.y+h/4.5, posCentre.x+w/3.4, posCentre.y+h/2);
     popStyle();
   }
   
