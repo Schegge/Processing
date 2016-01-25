@@ -27,7 +27,7 @@ class Grid {
     won = false;
   
     this.n = n;
-    this.bombs = bombs;    
+    this.bombs = bombs;
     n_total = n*n;
     
     ww = n*size + margin*2;
@@ -60,10 +60,9 @@ class Grid {
     for (int i = 0; i < n_total - ix.size(); i++) {
       bbs.add(i < bombs ? true : false);
     }
-    Collections.shuffle(bbs);    
-    // add cells' indexes excluded before
-    for (int i = ix.size() - 1; i >= 0; i--) {
-      bbs.add(ix.get(i) - i, false);
+    Collections.shuffle(bbs);
+    for (int i = 0; i < ix.size(); i++) {
+      bbs.add(ix.get(i), false);
     }
     
     // set bombs
@@ -163,20 +162,6 @@ class Grid {
       }
     }
   }
-  /*
-   * 
-   */
-  // for processing.js
-  //void ShuffleArray(boolean[] array) {
-  //  int index;
-  //  boolean temp;
-  //  for (int i = array.length - 1; i > 0; i--) {
-  //    index = floor(random(i+1));
-  //    temp = array[index];
-  //    array[index] = array[i];
-  //    array[i] = temp;
-  //  }
-  //}
   
   
   /*
@@ -246,3 +231,4 @@ class Grid {
   }
   
 }
+

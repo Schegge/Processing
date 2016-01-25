@@ -32,7 +32,6 @@ void settings() {
 
 void setup() {
   surface.setResizable(true);
-//  size(360, 390);
 
   frameRate(60);
 
@@ -82,5 +81,4 @@ void keyTyped() {
  *
  *
  */
- 
- 
+

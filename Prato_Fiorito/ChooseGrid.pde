@@ -2,8 +2,8 @@ class ChooseGrid {
   String nn = String.valueOf(N_DEFAULT);
   String bb = String.valueOf(B_DEFAULT);
   
-  Txt num = new Txt(true, width/4, height/2 - grid.margin/2);
-  Txt bom = new Txt(width*3/4, height/2 - grid.margin/2);
+  Txt num = new Txt(true, width/3, height/2 - grid.margin/2);
+  Txt bom = new Txt(width*2/3, height/2 - grid.margin/2);
   
   ChooseGrid() {}
   
@@ -85,3 +85,4 @@ class ChooseGrid {
     }
   }
 }
+

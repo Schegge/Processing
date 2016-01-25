@@ -48,3 +48,4 @@ class NewGame {
     return false;      
   }    
 }
+
