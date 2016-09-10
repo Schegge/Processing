@@ -5,12 +5,15 @@ class Comet {
   PVector acceleration;
   float rotation;
   float comaOpacity;
+  boolean end = false;
   
   PVector[] ps = {
     new PVector(     - 90, hh/2 + 50),
     new PVector(ww/2 - 80, hh/2 + 90),
-    new PVector(ww/2 - 25, hh/2 + 70),
+    new PVector(ww/2 - 25, hh/2 + 60),
   };
+  
+  PGraphics cometImg = createGraphics(120, 120);
 
   Comet() {
     position = ps[0];
@@ -19,6 +22,29 @@ class Comet {
     acceleration = new PVector(0, 0);
     rotation = 0;
     comaOpacity = 0;
+    
+    cometImg.beginDraw();
+    cometImg.background(120, 0);
+    cometImg.translate(65, 70);
+    cometImg.noStroke();
+      //border
+      cometImg.fill(120);
+      cometImg.ellipse(0, 0, 103, 83);
+      cometImg.ellipse(-20, -20, 87, 67);
+      //bottom
+      cometImg.fill(155);
+      cometImg.ellipse(0, 0, 100, 80);
+      cometImg.fill(135);
+      cometImg.ellipse(-4, -7, 67, 56);
+      //top
+      cometImg.fill(172);
+      cometImg.ellipse(-20, -20, 84, 64);
+      cometImg.rotate(radians(-15));
+      cometImg.fill(183);
+      cometImg.ellipse(-23, -32, 45, 34);
+      cometImg.fill(193);
+      cometImg.ellipse(-24, -33, 31, 22);
+    cometImg.endDraw();
   }
 
   void move() {
@@ -37,9 +63,16 @@ class Comet {
     pushMatrix();
     pushStyle();
     translate(position.x - 75, position.y);
-    comaOpacity += 0.2;
-    if (comaOpacity >= 150) {
-      comaOpacity = 150;
+    if(!end) {
+      comaOpacity += 0.2;
+      if (comaOpacity >= 150) {
+        comaOpacity = 150;
+      }
+    } else {
+      comaOpacity -= 0.2;
+      if (comaOpacity <= 0) {
+        comaOpacity = 0;
+      }
     }
     noStroke();
 
@@ -57,26 +90,8 @@ class Comet {
     pushStyle();
     pushMatrix();
     translate(position.x, position.y);
-    rotate(radians(rotation));
-    noStroke();
-
-    //border
-    fill(120);
-    ellipse(0, 0, 103, 83);
-    ellipse(-20, -20, 87, 67);
-    //bottom
-    fill(155);
-    ellipse(0, 0, 100, 80);
-    fill(135);
-    ellipse(-4, -7, 67, 56);
-    //top
-    fill(172);
-    ellipse(-20, -20, 84, 64);
-    rotate(radians(-15));
-    fill(183);
-    ellipse(-23, -32, 45, 34);
-    fill(193);
-    ellipse(-24, -33, 31, 22);
+    rotate(radians(rotation));    
+      image(cometImg, 0, 0);
     popMatrix();
     popStyle();
   }

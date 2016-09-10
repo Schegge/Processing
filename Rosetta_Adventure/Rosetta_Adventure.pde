@@ -1,24 +1,26 @@
-int ww = 400;
-int hh = 400;
+int ww = 16*44;
+int hh = 9*44;
 PFont myFont;
 
-int scene;
+int scene = 0;
 
 Animation animation;
 Rosetta rosetta;
 Philae philae;
 Comet comet;
 
+void settings() {
+  size(ww, hh);
+}
 
 void setup() {
-  size(400, 400);
+  frameRate(60);
   
   myFont = createFont("SegoeUI", 34);
   textFont(myFont);
   textAlign(CENTER, CENTER);
-
-  scene = 0;
-
+  imageMode(CENTER);
+  
   animation = new Animation();
   rosetta = new Rosetta();
   philae = new Philae();
@@ -36,12 +38,12 @@ void draw() {
     animation.animation();
     break;
   }
+  
+  //saveFrame("video/frames/####.jpg"); //save frames for video
 }
 
 void mouseClicked() {
-  if (mouseX > ww/2 - 45 && mouseX < ww/2 + 45 && mouseY > hh/2 - 45 && mouseY < hh/2 + 45) {
-    if (scene == 0) { 
+  if (scene == 0 && mouseX > ww/2 - 45 && mouseX < ww/2 + 45 && mouseY > hh/2 - 45 && mouseY < hh/2 + 45) {
       scene = 1;
-    }
   }
 }

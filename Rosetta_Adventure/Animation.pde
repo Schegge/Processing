@@ -1,50 +1,52 @@
 class Animation {
   String[] scritte = {
-    /* 0*/ "once upon a time...", 
-    /* 1*/ "a spacecraft called rosetta", 
-    /* 2*/ "and her brother philae", 
-    /* 3*/ "set off on an adventure", 
-    /* 4*/ "a long long journey to visit a comet", 
-    /* 5*/ "called 67p/churyumov-gerasimenko", 
-    /* 6*/ "after a 10-year journey", 
-    /* 7*/ "they have finally reached their destination", 
-    /* 8*/ "rosetta's exciting mission was to follow the comet", 
-    /* 9*/ "as it travelled around the sun", 
-    /*10*/ "she would learn all about it", 
-    /*11*/ "and how it changes as it gets warmer and warmer", 
-    /*12*/ "while philae would visit the surface", 
-    /*13*/ "as rosetta got closer to the comet", 
-    /*14*/ "she realized its shape was rather strange", 
-    /*15*/ "after a long night of preparation", 
-    /*16*/ "philae was ready for separation and landing", 
-    /*17*/ "the moment he had been dreaming of", 
-    /*18*/ "had finally arrived", 
-    /*19*/ "he had reached the surface of the comet", 
-    /*20*/ "but all was not right", 
-    /*21*/ "his harpoons did not fire", 
-    /*22*/ "he was rising from the surface again", 
-    /*23*/ "but eventually he came back down again", 
-    /*24*/ "it took him just over two days to conduct", 
-    /*25*/ "all the experiments he had brought with him", 
-    /*26*/ "after all his hard work", 
-    /*27*/ "philae began to feel tired", 
-    /*28*/ "he fell into a deep sleep safe in the knowledge", 
-    /*29*/ "that he did his main job well", 
-    /*30*/ "...", 
-    /*31*/ ".....", 
-    /*32*/ ".......", 
-    /*33*/ "rosetta has been waiting for philae to wake up", 
-    /*34*/ "but her brother has not yet reported back"             
+    /* 0*/ "once upon a time...",
+    /* 1*/ "a spacecraft called rosetta",
+    /* 2*/ "and her brother philae",
+    /* 3*/ "set off on an adventure",
+    /* 4*/ "a long long journey to visit a comet",
+    /* 5*/ "called 67p/churyumov-gerasimenko",
+    /* 6*/ "after a 10-year journey",
+    /* 7*/ "they finally reached their destination",
+    /* 8*/ "rosetta's exciting mission was to follow the comet",
+    /* 9*/ "as it travelled around the sun",
+    /*10*/ "while philae would visit the surface",
+    /*11*/ "as rosetta got closer to the comet",
+    /*12*/ "she realized its shape was rather strange",
+    /*13*/ "after a long night of preparation",
+    /*14*/ "philae was ready for separation and landing",
+    /*15*/ "he reached the surface of the comet",
+    /*16*/ "but all was not well",
+    /*17*/ "his harpoons did not fire",
+    /*18*/ "he rised from the surface",
+    /*19*/ "but eventually came back down again",
+    /*20*/ "it took him just over two days to conduct",
+    /*21*/ "all the experiments he had brought with him",
+    /*22*/ "after all his hard work",
+    /*23*/ "philae began to feel tired",
+    /*24*/ "he fell into a deep sleep safe in the knowledge",
+    /*25*/ "that he did his main job well",
+    /*26*/ "...",
+    /*27*/ "......",
+    /*28*/ "rosetta was waiting for philae to wake up",
+    /*29*/ "not even knowing where he had landed",
+    /*30*/ "but her brother didn't report back for a long time",
+    /*31*/ "time passed and briefly he spoke to her",
+    /*32*/ "before losing contact again",
+    /*33*/ "rosetta found him again just before",
+    /*34*/ "the end of her adventure",
+    /*35*/ "crushing into the comet's surface",
+    /*36*/ "to rest forever near her brother"
   };
   int textsLength = scritte.length;
   Texts[] texts = new Texts[textsLength];
   
   float timePlay; //time passed in play
   float timeDraw; //time passed in animation
-  int time; //every text appear for 3 seconds
+  float time = 60*3; //every text appear for 3 seconds, frameRate=60
   float[] startTime = new float[textsLength]; //when each text starts
 
-  float[][] stars = new float[20][3];
+  float[][] stars = new float[30][3];
   int starsLength = stars.length;
 
   int endBackOpacity = 1;
@@ -52,6 +54,7 @@ class Animation {
   float endRotation = 0;
   float endRotRate = 0.3;
   
+  PGraphics finImg = createGraphics(187, 60);
   
   Animation() {
     for (int i = 0; i < starsLength; i++) {
@@ -59,65 +62,89 @@ class Animation {
       stars[i][1] = random(hh);
       stars[i][2] = random(6);
     }
-  
-    time = 3;
+    
     for (int i = 0; i < textsLength; i++) {
       startTime[i] = 2 + time * i;
       texts[i] = new Texts(scritte[i]);
     }
+    
+    finImg.beginDraw();
+    finImg.background(100, 0);
+    finImg.textSize(58);
+    finImg.translate(0, 53);
+      finImg.fill(0, 0, 0, 100);
+      finImg.text("‹ f i n ›", 2, 2);
+      finImg.fill(255, 255, 255);
+      finImg.text("‹ f i n ›", 0, 0);
+    finImg.endDraw();
   }
   
   
   void animation() {
     cursor(ARROW);
-    timeDraw = millis()*0.001 - timePlay;
+    timeDraw = frameCount - timePlay;
+    
     for (int i = 0; i < textsLength; i++) {
       if (timeDraw > startTime[i] && timeDraw <= startTime[i] + time) {
         texts[i].drawing();
       }
     }
-    rosetta.drawing();
+    
     rosetta.move();
-    if (timeDraw > startTime[2] && timeDraw <= startTime[17]) {
+    
+    if (timeDraw > startTime[2] && timeDraw <= startTime[14]) {
       philae.x = rosetta.position.x;
-      philae.y = rosetta.position.y+55;
+      philae.y = rosetta.position.y + 55;
       philae.drawingR();
     }
-    if (timeDraw > startTime[12]) {
+    if (timeDraw > startTime[10]) {
       comet.drawing();
       comet.move();
     }
-    if (timeDraw > startTime[13]) {
+    if (timeDraw > startTime[11]) {
       rosetta.center = rosetta.ps[2];
     }
-    if (timeDraw > startTime[17]) {
+    if (timeDraw > startTime[14]) {
       philae.movingToComet = true;
       philae.drawingC();
       philae.move();
       philae.rotation++;
     }
-    if ( (timeDraw > startTime[17] && timeDraw <= startTime[22]) || timeDraw > startTime[23]) {
+    if ( (timeDraw > startTime[14] && timeDraw <= startTime[18]) || timeDraw > startTime[19]) {
       philae.xDestination = comet.position.x;
       philae.yDestination = comet.position.y;
     }
-    if (timeDraw > startTime[18]) {
+    if (timeDraw > startTime[14]) {
       rosetta.center = rosetta.ps[3];
     }
-    if (timeDraw > startTime[22] && timeDraw <= startTime[23]) {
-      philae.xDestination = comet.position.x + 65;
+    if (timeDraw > startTime[18] && timeDraw <= startTime[19]) {
+      philae.xDestination = comet.position.x + 80;
     }
-    if (timeDraw > startTime[27]) {
-      philae.x = comet.position.x;
-      philae.y = comet.position.y;
+    if (timeDraw > startTime[20]) {
       comet.center = comet.ps[2];
     }
-    if (timeDraw > startTime[28]) {
+    if (timeDraw > startTime[23]) {
+      philae.x = comet.position.x;
+      philae.y = comet.position.y;
+    }
+    if (timeDraw > startTime[24]) {
       philae.sleeping = true;
     }
-    if (timeDraw > startTime[29]) {
+    if (timeDraw > startTime[25]) {
       comet.coma();
     }
-    if (timeDraw > startTime[34] + time) {
+    if (timeDraw > startTime[31]) {
+      comet.end = true;
+    }
+    if (timeDraw > startTime[35]) {
+      rosetta.doScaling = true;
+      rosetta.end = true;
+      rosetta.center = new PVector(comet.position.x, comet.position.y);
+    }
+    
+    rosetta.drawing();
+    
+    if (timeDraw > startTime[36]) {
       ending();
     }
   }
@@ -129,7 +156,7 @@ class Animation {
     } else {
       cursor(ARROW);
     }
-    timePlay = millis()*0.001;
+    timePlay = frameCount;
     pushStyle();
     fill(255, 255, 255, 50);
     ellipse(ww/2, hh/2, 90, 90);
@@ -139,7 +166,7 @@ class Animation {
     triangle(ww/2 - 20, hh/2 - 30, ww/2 - 20, hh/2 + 30, ww/2 + 35, hh/2);
     fill(255, 255, 255, 180);
     textSize(17);
-    text("play", ww/2, hh/2);
+    text("play", ww/2, hh/2-2);
     popStyle();
   }
   
@@ -150,19 +177,21 @@ class Animation {
     fill(40, 127, 155, endBackOpacity);
     rectMode(CORNER);
     rect(0, 0, ww, hh);
-    textSize(58);
+    popStyle();
   
+    pushStyle();
     pushMatrix();
+    tint(255, endBackOpacity);
     translate(ww/2, hh/2);
     rotate(radians(endRotation));
-    fill(0, 0, 0, endFinOpacity/3);
-    text("‹ f i n ›", 2, 2);
-    fill(255, 255, 255, endFinOpacity);
-    text("‹ f i n ›", 0, 0);
+      image(finImg, 0, 0);
     popMatrix();
-  
+    popStyle();
+    
+    pushStyle();
     textSize(10);
-    text("...until the next news.", ww/1.3, hh/1.3);
+    fill(255, 150);
+    text("by scheggedistelle", ww*0.9, hh*0.9);
     popStyle();
     
     endBackOpacity++;
