@@ -188,12 +188,6 @@ class Animation {
     popMatrix();
     popStyle();
     
-    pushStyle();
-    textSize(10);
-    fill(255, 150);
-    text("by scheggedistelle", ww*0.9, hh*0.9);
-    popStyle();
-    
     endBackOpacity++;
     if (endBackOpacity >= 255) {
       endBackOpacity = 255;
